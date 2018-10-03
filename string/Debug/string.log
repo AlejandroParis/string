@@ -1,1 +1,3 @@
-﻿
+﻿  Source.cpp
+c:\users\alejandropg6\documents\github\string\string\string.h(56): warning C4018: '>=': signed/unsigned mismatch
+  string.vcxproj -> C:\Users\alejandropg6\Documents\GitHub\string\string\Debug\string.exe

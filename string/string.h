@@ -1,27 +1,31 @@
 #ifndef __p2String_H__
 #define __p2String_H__
-
 #include <string.h>
-
-class p2String
+#include <assert.h>
+class String
 {
 public:
 
 	// Constructors
-	p2String()
+	String()
 	{
 		Alloc(1);
 		clear();
 	}
 
-	p2String(const p2String& string)
+	String(const String& string)
 	{
-		Alloc(string.length() + 1);
-		strcpy_s(str, max_capacity, string.str);
+		assert(string.str);
+		if (string.str != nullptr)
+		{
+			Alloc(string.length() + 1);
+			strcpy_s(str, max_capacity, string.str);
+		}
 	}
 
-	p2String(const char *string)
+	String(const char* string)
 	{
+		assert(string != nullptr);
 		if (string != nullptr)
 		{
 			Alloc(strlen(string) + 1);
@@ -32,6 +36,36 @@ public:
 			Alloc(1);
 			clear();
 		}
+	}
+
+	~String() 
+	{
+		if (str != nullptr)
+		{
+			delete[] str;
+			str = nullptr;
+			max_capacity = 0;
+		}
+	}
+
+	const char* operator=(const char* string) 
+	{
+		assert(string != nullptr);
+		if (string != nullptr)
+		{
+			if (strlen(string) >= max_capacity)
+			{
+				delete[] str;
+			}
+			Alloc(strlen(string) + 1);
+			strcpy_s(str, max_capacity, string);
+		}
+		return string;
+	}
+
+	char* getString()
+	{
+		return str;
 	}
 
 	int length() const
